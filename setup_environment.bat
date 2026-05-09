@@ -24,17 +24,17 @@ if %errorlevel% neq 0 (
 )
 echo [OK] Node.js found.
 
-:: 3. Create Python Virtual Environment (within workspace for portability)
-if not exist "venv" (
-    echo [INFO] Creating Python virtual environment (venv)...
-    python -m venv venv
+:: 3. Create Python Virtual Environment in the PARENT folder
+if not exist "..\my_env" (
+    echo [INFO] Creating Python virtual environment (..\my_env)...
+    python -m venv "..\my_env"
 ) else (
-    echo [OK] Virtual environment already exists.
+    echo [OK] Virtual environment 'my_env' already exists in parent folder.
 )
 
 :: 4. Install Backend Dependencies
 echo [INFO] Installing Backend dependencies...
-call venv\Scripts\activate
+call "..\my_env\Scripts\activate"
 cd backend
 python -m pip install --upgrade pip
 pip install -r requirements.txt
@@ -54,7 +54,7 @@ if not exist "backend\.env" (
 :: 6. Run Database Migrations
 echo [INFO] Running database migrations...
 cd backend
-call ..\venv\Scripts\activate
+call "..\..\my_env\Scripts\activate"
 alembic upgrade head
 cd ..
 
