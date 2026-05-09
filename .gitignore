@@ -10,9 +10,9 @@ __pycache__/
 my_env/
 
 # Database
-backend/data/*.db
-backend/data/*.db-shm
-backend/data/*.db-wal
+#backend/data/*.db
+#backend/data/*.db-shm
+#backend/data/*.db-wal
 
 # Alembic
 backend/alembic/versions/*.pyc
