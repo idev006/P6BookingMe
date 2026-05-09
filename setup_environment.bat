@@ -41,7 +41,6 @@ if not exist "..\my_env" (
 :: 4. Install Backend Dependencies
 echo [INFO] Installing Backend dependencies...
 call "..\my_env\Scripts\activate"
-cd backend
 python -m pip install --upgrade pip
 pip install -r requirements.txt
 if %errorlevel% neq 0 (
@@ -49,7 +48,6 @@ if %errorlevel% neq 0 (
     pause
     exit /b 1
 )
-cd ..
 
 :: 5. Setup Environment Variables (.env)
 if not exist "backend\.env" (
