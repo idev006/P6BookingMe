@@ -7,15 +7,15 @@ echo ==========================================
 echo.
 
 :: 1. Check for Python 3.12
-echo [INFO] Checking Python version...
-for /f "tokens=2" %%v in ('python --version 2^>^&1') do set py_ver=%%v
-echo %py_ver% | findstr /r "^3.12" >nul
+echo [INFO] Checking Python 3.12...
+py -3.12 --version >nul 2>&1
 if %errorlevel% neq 0 (
-    echo [ERROR] Required Python 3.12.x, but found %py_ver%.
+    echo [ERROR] Python 3.12 is not installed or 'py' launcher is missing.
     echo Please install Python 3.12 and try again.
     pause
     exit /b 1
 )
+for /f "tokens=2" %%v in ('py -3.12 --version 2^>^&1') do set py_ver=%%v
 echo [OK] Python %py_ver% found.
 
 :: 2. Check for Node.js v24
@@ -32,8 +32,8 @@ echo [OK] Node.js %node_ver% found.
 
 :: 3. Create Python Virtual Environment in the PARENT folder
 if not exist "..\my_env" (
-    echo [INFO] Creating Python virtual environment (..\my_env)...
-    python -m venv "..\my_env"
+    echo [INFO] Creating Python 3.12 virtual environment (..\my_env)...
+    py -3.12 -m venv "..\my_env"
 ) else (
     echo [OK] Virtual environment 'my_env' already exists in parent folder.
 )
