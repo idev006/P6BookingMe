@@ -1,0 +1,81 @@
+@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Geist:wght@400;500;600;700&display=swap');
+
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@plugin "daisyui/index.js" {
+  themes: all;
+}
+
+@theme {
+  --font-sans: 'Chakra Petch', 'Geist', ui-sans-serif, system-ui, sans-serif;
+  
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  /* Use DaisyUI variables directly for Tailwind v4 utilities */
+  --color-primary: oklch(var(--p));
+  --color-secondary: oklch(var(--s));
+  --color-accent: oklch(var(--a));
+  --color-neutral: oklch(var(--n));
+  --color-base-100: oklch(var(--b1));
+  --color-base-200: oklch(var(--b2));
+  --color-base-300: oklch(var(--b3));
+  --color-info: oklch(var(--in));
+  --color-success: oklch(var(--su));
+  --color-warning: oklch(var(--wa));
+  --color-error: oklch(var(--er));
+}
+
+@layer base {
+  html, body {
+    @apply bg-base-300 text-base-content font-sans antialiased min-h-screen transition-colors duration-300;
+  }
+}
+
+@layer components {
+  .glass-card {
+    @apply bg-base-100/30 backdrop-blur-xl border border-base-content/5 rounded-3xl shadow-2xl;
+  }
+}
+
+.bg-mesh {
+  position: fixed;
+  inset: 0;
+  background-image: 
+    radial-gradient(at 0% 0%, var(--color-primary) 0, transparent 50%),
+    radial-gradient(at 100% 100%, var(--color-secondary) 0, transparent 50%);
+  filter: blur(100px);
+  z-index: -1;
+  pointer-events: none;
+}
+
+@utility scrollbar-hide {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+@utility premium-scrollbar {
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: oklch(var(--p) / 0.2);
+    border-radius: 20px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    background: oklch(var(--p) / 0.5);
+    background-clip: content-box;
+  }
+}
