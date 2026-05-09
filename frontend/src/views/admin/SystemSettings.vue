@@ -13,7 +13,7 @@ const ui = useUIStore();
 const fetchConfigs = async () => {
   loading.value = true;
   try {
-    const response = await api.get('/admin/configs');
+    const response = await api.get('/admin/configs/');
     configs.value = response.data.data;
   } catch (err) {
     console.error('Failed to fetch configs', err);

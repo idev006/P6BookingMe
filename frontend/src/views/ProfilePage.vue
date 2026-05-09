@@ -27,7 +27,7 @@ onMounted(() => {
 const handleUpdate = async () => {
   loading.value = true;
   try {
-    await api.patch('/users/me', form);
+    await api.patch('/users/me/', form);
     await auth.fetchUser(); // Refresh local data
     ui.showAlert({ title: 'สำเร็จ', message: 'อัปเดตข้อมูลส่วนตัวเรียบร้อยแล้ว', type: 'success' });
   } catch (err: any) {
@@ -46,7 +46,7 @@ const handleAvatarUpload = async (event: any) => {
 
   uploading.value = true;
   try {
-    await api.post('/users/me/avatar', formData, {
+    await api.post('/users/me/avatar/', formData, {
       headers: { 'Content-Type': 'multipart/form-data' }
     });
     await auth.fetchUser();

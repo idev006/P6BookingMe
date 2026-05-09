@@ -31,10 +31,10 @@ const fetchData = async () => {
   loading.value = true;
   try {
     const [summaryRes, roomsRes, trendsRes, recentRes] = await Promise.all([
-      api.get('/admin/reporting/summary'),
-      api.get('/admin/reporting/frequent-rooms'),
-      api.get('/admin/reporting/usage-trends'),
-      api.get('/admin/bookings?limit=5') // Fetch recent 5
+      api.get('/admin/reporting/summary/'),
+      api.get('/admin/reporting/frequent-rooms/'),
+      api.get('/admin/reporting/usage-trends/'),
+      api.get('/admin/bookings/?limit=5') // Fetch recent 5
     ]);
     
     stats.value = summaryRes.data.data;
@@ -56,7 +56,7 @@ const openDetail = (booking: any) => {
 const handleExport = async () => {
   // ... existing code ...
   try {
-    const response = await api.get('/admin/reporting/export/bookings', { responseType: 'blob' });
+    const response = await api.get('/admin/reporting/export/bookings/', { responseType: 'blob' });
     const url = window.URL.createObjectURL(new Blob([response.data]));
     const link = document.createElement('a');
     link.href = url;

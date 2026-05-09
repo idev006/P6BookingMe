@@ -12,7 +12,7 @@ import json
 
 router = APIRouter()
 
-@router.get("", response_model=StandardResponse)
+@router.get("/", response_model=StandardResponse)
 async def list_all_bookings(
     skip: int = Query(0, ge=0),
     limit: int = Query(20, ge=1, le=100),
@@ -52,7 +52,7 @@ async def list_all_bookings(
         "total": total
     })
 
-@router.post("/{booking_id}/cancel", response_model=StandardResponse)
+@router.post("/{booking_id}/cancel/", response_model=StandardResponse)
 async def admin_cancel_booking(
     booking_id: int,
     reason: str = Body(..., embed=True),

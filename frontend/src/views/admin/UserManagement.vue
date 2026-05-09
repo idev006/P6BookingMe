@@ -56,7 +56,7 @@ const openDetail = async (user: any) => {
   const now = new Date();
   
   try {
-    const response = await api.get('/bookings', { params: { user_id: user.id, limit: 50 } });
+    const response = await api.get('/bookings/', { params: { user_id: user.id, limit: 50 } });
     const all = response.data.data.data;
     
     // Sort and Filter client-side for consistent behavior
@@ -94,7 +94,7 @@ const fetchUsers = async () => {
       search: searchQuery.value || undefined,
       status: undefined // We can add status filter UI later if needed, but search is primary
     };
-    const response = await api.get('/admin/users', { params });
+    const response = await api.get('/admin/users/', { params });
     users.value = response.data.data.data;
     totalUsers.value = response.data.data.total;
   } catch (err) {
@@ -128,7 +128,7 @@ const handleApprove = async (id: number) => {
     type: 'success',
     onConfirm: async () => {
       try {
-        await api.post(`/admin/users/${id}/approve`);
+        await api.post(`/admin/users/${id}/approve/`);
         ui.showAlert({ title: 'สำเร็จ', message: 'อนุมัติสมาชิกเรียบร้อยแล้ว', type: 'success' });
         fetchUsers();
       } catch (err: any) {
@@ -151,7 +151,7 @@ const handleReject = async () => {
   }
   
   try {
-    await api.post(`/admin/users/${selectedUserId.value}/reject`, { reason: rejectReason.value });
+    await api.post(`/admin/users/${selectedUserId.value}/reject/`, { reason: rejectReason.value });
     ui.showAlert({ title: 'สำเร็จ', message: 'ปฏิเสธสมาชิกเรียบร้อยแล้ว', type: 'success' });
     isRejectModalOpen.value = false;
     fetchUsers();
@@ -167,7 +167,7 @@ const handleUpdateRole = async (id: number, role: string) => {
     type: 'warning',
     onConfirm: async () => {
       try {
-        await api.post(`/admin/users/${id}/role`, { role });
+        await api.post(`/admin/users/${id}/role/`, { role });
         ui.showAlert({ title: 'สำเร็จ', message: `ปรับเป็นสิทธิ์ ${role} แล้ว`, type: 'success' });
         fetchUsers();
       } catch (err: any) {
@@ -184,7 +184,7 @@ const handleUpdateStatus = async (id: number, status: string) => {
     type: status === 'suspended' || status === 'rejected' ? 'error' : 'warning',
     onConfirm: async () => {
       try {
-        await api.post(`/admin/users/${id}/status`, { status });
+        await api.post(`/admin/users/${id}/status/`, { status });
         ui.showAlert({ title: 'สำเร็จ', message: `ปรับสถานะเป็น ${status} แล้ว`, type: 'success' });
         fetchUsers();
       } catch (err: any) {
@@ -207,7 +207,7 @@ const handleAnonymize = async () => {
   }
   
   try {
-    await api.post(`/admin/users/${userToAnonymize.value.id}/anonymize`);
+    await api.post(`/admin/users/${userToAnonymize.value.id}/anonymize/`);
     ui.showAlert({ title: 'สำเร็จ', message: 'ทำลายข้อมูลส่วนบุคคล (PDPA) เรียบร้อยแล้ว', type: 'success' });
     isAnonymizeModalOpen.value = false;
     fetchUsers();

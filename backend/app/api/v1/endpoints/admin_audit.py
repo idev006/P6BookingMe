@@ -8,7 +8,7 @@ from app.schemas.common import StandardResponse
 
 router = APIRouter()
 
-@router.get("", response_model=StandardResponse)
+@router.get("/", response_model=StandardResponse)
 async def list_audit_logs(
     skip: int = Query(0, ge=0),
     limit: int = Query(50, ge=1, le=100),

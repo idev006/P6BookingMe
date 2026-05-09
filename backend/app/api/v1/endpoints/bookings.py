@@ -9,7 +9,7 @@ from app.schemas.common import StandardResponse
 
 router = APIRouter()
 
-@router.post("", response_model=StandardResponse)
+@router.post("/", response_model=StandardResponse)
 async def create_booking(
     body: BookingCreate,
     current_user: User = Depends(get_current_user),
@@ -22,7 +22,7 @@ async def create_booking(
         message="ส่งคำขอจองห้องประชุมเรียบร้อยแล้ว"
     )
 
-@router.get("", response_model=StandardResponse)
+@router.get("/", response_model=StandardResponse)
 async def list_my_bookings(
     skip: int = Query(0, ge=0),
     limit: int = Query(10, ge=1, le=100),
@@ -52,7 +52,7 @@ async def get_booking_detail(
         data=BookingResponse.from_orm(booking)
     )
 
-@router.post("/{booking_id}/cancel", response_model=StandardResponse)
+@router.post("/{booking_id}/cancel/", response_model=StandardResponse)
 async def cancel_booking(
     booking_id: int,
     current_user: User = Depends(get_current_user),
@@ -66,7 +66,7 @@ async def cancel_booking(
 
 
 
-@router.patch("/{booking_id}/reschedule", response_model=StandardResponse)
+@router.patch("/{booking_id}/reschedule/", response_model=StandardResponse)
 async def reschedule_booking(
     booking_id: int,
     body: BookingReschedule,
@@ -94,7 +94,7 @@ async def update_booking(
         message="แก้ไขข้อมูลการจองเรียบร้อยแล้ว"
     )
 
-@router.post("/{booking_id}/duplicate", response_model=StandardResponse)
+@router.post("/{booking_id}/duplicate/", response_model=StandardResponse)
 async def duplicate_booking(
     booking_id: int,
     current_user: User = Depends(get_current_user),

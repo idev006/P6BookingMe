@@ -82,7 +82,7 @@ async def update_room(
 ):
     return await service.update_room(room_id, data, current_admin.id, ip_address=request.client.host)
 
-@router.post("/{room_id}/deactivate", response_model=RoomResponse)
+@router.post("/{room_id}/deactivate/", response_model=RoomResponse)
 async def deactivate_room(
     request: Request,
     room_id: int,
@@ -91,7 +91,7 @@ async def deactivate_room(
 ):
     return await service.deactivate_room(room_id, current_admin.id, ip_address=request.client.host)
 
-@router.post("/{room_id}/activate", response_model=RoomResponse)
+@router.post("/{room_id}/activate/", response_model=RoomResponse)
 async def activate_room(
     request: Request,
     room_id: int,
@@ -102,7 +102,7 @@ async def activate_room(
 
 # --- IMAGE Management ---
 
-@router.post("/{room_id}/images", response_model=RoomImageResponse, status_code=status.HTTP_201_CREATED)
+@router.post("/{room_id}/images/", response_model=RoomImageResponse, status_code=status.HTTP_201_CREATED)
 async def upload_room_image(
     request: Request,
     room_id: int,
@@ -112,7 +112,7 @@ async def upload_room_image(
 ):
     return await service.add_room_image(room_id, file, current_admin.id, ip_address=request.client.host)
 
-@router.delete("/{room_id}/images/{image_id}", status_code=status.HTTP_204_NO_CONTENT)
+@router.delete("/{room_id}/images/{image_id}/", status_code=status.HTTP_204_NO_CONTENT)
 async def delete_room_image(
     request: Request,
     room_id: int,
@@ -123,7 +123,7 @@ async def delete_room_image(
     await service.delete_room_image(room_id, image_id, current_admin.id, ip_address=request.client.host)
     return None
 
-@router.post("/{room_id}/images/{image_id}/set-primary", response_model=dict)
+@router.post("/{room_id}/images/{image_id}/set-primary/", response_model=dict)
 async def set_primary_image(
     request: Request,
     room_id: int,

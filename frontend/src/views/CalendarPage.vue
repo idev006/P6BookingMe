@@ -89,7 +89,7 @@ const fetchBookings = async () => {
     const startRange = new Date(now.getFullYear(), now.getMonth() - 2, 1);
     const endRange = new Date(now.getFullYear(), now.getMonth() + 3, 0);
 
-    let url = `/calendar?start_date=${startRange.toISOString()}&end_date=${endRange.toISOString()}`;
+    let url = `/calendar/?start_date=${startRange.toISOString()}&end_date=${endRange.toISOString()}`;
     if (selectedRoomId.value) url += `&room_id=${selectedRoomId.value}`;
     if (isPendingOnly.value) url += `&status=pending`;
 
@@ -166,7 +166,7 @@ const initCalendar = (initialEvents: any[] = []) => {
             message: 'ต้องการเลื่อนเวลาใช่หรือไม่?',
             onConfirm: async () => {
               try {
-                await api.patch(`/bookings/${updatedEvent.id}/reschedule`, {
+                await api.patch(`/bookings/${updatedEvent.id}/reschedule/`, {
                   start_time: fmt(zStart),
                   end_time: fmt(zEnd)
                 });

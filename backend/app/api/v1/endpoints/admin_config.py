@@ -12,7 +12,7 @@ import json
 
 router = APIRouter()
 
-@router.get("", response_model=StandardResponse)
+@router.get("/", response_model=StandardResponse)
 async def list_configs(
     current_user: User = Depends(require_admin),
     db: AsyncSession = Depends(get_db)

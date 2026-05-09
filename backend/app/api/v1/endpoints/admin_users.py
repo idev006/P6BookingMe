@@ -13,7 +13,7 @@ import json
 
 router = APIRouter()
 
-@router.get("", response_model=StandardResponse)
+@router.get("/", response_model=StandardResponse)
 async def list_users(
     status: Optional[str] = Query(None),
     role: Optional[str] = Query(None),
@@ -56,7 +56,7 @@ async def list_users(
         "total": total
     })
 
-@router.post("/{user_id}/approve", response_model=StandardResponse)
+@router.post("/{user_id}/approve/", response_model=StandardResponse)
 async def approve_member(
     user_id: int,
     current_user: User = Depends(require_admin),
@@ -88,7 +88,7 @@ async def approve_member(
     
     return StandardResponse(message="อนุมัติสมาชิกเรียบร้อยแล้ว")
 
-@router.post("/{user_id}/reject", response_model=StandardResponse)
+@router.post("/{user_id}/reject/", response_model=StandardResponse)
 async def reject_member(
     user_id: int,
     reason: str = Body(..., embed=True),
@@ -119,7 +119,7 @@ async def reject_member(
     
     return StandardResponse(message=f"ปฏิเสธการสมัครสมาชิกเรียบร้อยแล้ว (เหตุผล: {reason})")
 
-@router.post("/{user_id}/role", response_model=StandardResponse)
+@router.post("/{user_id}/role/", response_model=StandardResponse)
 async def update_user_role(
     user_id: int,
     role: str = Body(..., embed=True),
@@ -148,7 +148,7 @@ async def update_user_role(
     
     return StandardResponse(message=f"อัปเดตสิทธิ์เป็น {role} เรียบร้อยแล้ว")
 
-@router.post("/{user_id}/status", response_model=StandardResponse)
+@router.post("/{user_id}/status/", response_model=StandardResponse)
 async def update_user_status(
     user_id: int,
     status: str = Body(..., embed=True),
@@ -177,7 +177,7 @@ async def update_user_status(
     
     return StandardResponse(message=f"อัปเดตสถานะเป็น {status} เรียบร้อยแล้ว")
 
-@router.post("/{user_id}/anonymize", response_model=StandardResponse)
+@router.post("/{user_id}/anonymize/", response_model=StandardResponse)
 async def anonymize_user(
     user_id: int,
     current_user: User = Depends(require_admin),

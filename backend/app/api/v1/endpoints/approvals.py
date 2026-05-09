@@ -11,7 +11,7 @@ from typing import Optional
 
 router = APIRouter()
 
-@router.get("/summary", response_model=StandardResponse)
+@router.get("/summary/", response_model=StandardResponse)
 async def get_approvals_summary(
     current_user: User = Depends(require_approver),
     db: AsyncSession = Depends(get_db)
@@ -50,7 +50,7 @@ async def get_approvals_summary(
         "recent_actions": recent_data
     })
 
-@router.get("/pending", response_model=StandardResponse)
+@router.get("/pending/", response_model=StandardResponse)
 async def list_pending_bookings(
     skip: int = Query(0, ge=0),
     limit: int = Query(10, ge=1, le=100),
@@ -73,7 +73,7 @@ async def list_pending_bookings(
         }
     )
 
-@router.get("/history", response_model=StandardResponse)
+@router.get("/history/", response_model=StandardResponse)
 async def list_my_approvals(
     skip: int = Query(0, ge=0),
     limit: int = Query(10, ge=1, le=100),
@@ -110,7 +110,7 @@ async def list_my_approvals(
         "total": total
     })
 
-@router.post("/{booking_id}/approve", response_model=StandardResponse)
+@router.post("/{booking_id}/approve/", response_model=StandardResponse)
 async def approve_booking(
     booking_id: int,
     note: Optional[str] = Body(None, embed=True),
@@ -122,7 +122,7 @@ async def approve_booking(
     booking = await service.approve_booking(booking_id, current_user, note)
     return StandardResponse(data=BookingResponse.model_validate(booking), message="อนุมัติการจองเรียบร้อยแล้ว")
 
-@router.post("/{booking_id}/reject", response_model=StandardResponse)
+@router.post("/{booking_id}/reject/", response_model=StandardResponse)
 async def reject_booking(
     booking_id: int,
     note: str = Body(..., embed=True),

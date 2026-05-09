@@ -17,7 +17,7 @@ def get_auth_service(db: AsyncSession = Depends(get_db)) -> AuthService:
     audit_repo = AuditLogRepository(db)
     return AuthService(user_repo, audit_repo)
 
-@router.post("/register", response_model=dict, status_code=status.HTTP_201_CREATED)
+@router.post("/register/", response_model=dict, status_code=status.HTTP_201_CREATED)
 async def register(
     request: Request,
     data: UserCreate,
@@ -29,7 +29,7 @@ async def register(
         "message": "สมัครสมาชิกสำเร็จ กรุณารอการอนุมัติจาก Admin"
     }
 
-@router.post("/login", response_model=dict)
+@router.post("/login/", response_model=dict)
 @limiter.limit("5/minute")
 async def login(
     request: Request,
@@ -41,7 +41,7 @@ async def login(
         "data": token.model_dump(mode='json')
     }
 
-@router.get("/me", response_model=dict)
+@router.get("/me/", response_model=dict)
 async def get_me(current_user: User = Depends(get_current_user)):
     return {
         "data": UserResponse.model_validate(current_user).model_dump(mode='json')
@@ -69,7 +69,7 @@ async def update_me(
         "message": "อัปเดตข้อมูลสำเร็จ"
     }
 
-@router.post("/logout", response_model=dict)
+@router.post("/logout/", response_model=dict)
 async def logout(
     request: Request,
     auth_service: AuthService = Depends(get_auth_service),

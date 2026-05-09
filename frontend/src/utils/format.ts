@@ -1,7 +1,8 @@
 export const getImageUrl = (path: string | undefined) => {
   if (!path) return '';
-  const apiBase = import.meta.env.VITE_API_URL?.replace('/api/v1', '') || 'http://localhost:8000';
-  return `${apiBase}/${path}`;
+  if (path.startsWith('http')) return path;
+  const apiBase = import.meta.env.VITE_API_URL?.replace('/api/v1', '') || '';
+  return `${apiBase}/${path}`.replace(/\/+/g, '/');
 };
 
 export const formatDateTime = (dateStr: string | undefined) => {

@@ -25,16 +25,16 @@ export interface BookingCreateData {
 
 const bookingService = {
   createBooking: (data: BookingCreateData) => 
-    api.post('/bookings', data),
+    api.post('/bookings/', data),
 
   getMyBookings: (params: any = {}) => 
-    api.get('/bookings', { params }),
+    api.get('/bookings/', { params }),
 
   getBookingDetail: (id: number) => 
     api.get(`/bookings/${id}`),
 
   cancelBooking: (id: number) => 
-    api.post(`/bookings/${id}/cancel`),
+    api.post(`/bookings/${id}/cancel/`),
 
   updateBooking: (id: number, data: any) => 
     api.patch(`/bookings/${id}`, data),

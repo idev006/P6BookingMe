@@ -13,11 +13,11 @@ import json
 
 router = APIRouter()
 
-@router.get("/me", response_model=StandardResponse)
+@router.get("/me/", response_model=StandardResponse)
 async def get_me(current_user: User = Depends(get_current_user)):
     return StandardResponse(data=current_user)
 
-@router.patch("/me", response_model=StandardResponse)
+@router.patch("/me/", response_model=StandardResponse)
 async def update_profile(
     body: UserUpdate,
     current_user: User = Depends(get_current_user),
@@ -53,7 +53,7 @@ async def update_profile(
     
     return StandardResponse(data=current_user, message="อัปเดตข้อมูลส่วนตัวเรียบร้อยแล้ว")
 
-@router.post("/me/avatar", response_model=StandardResponse)
+@router.post("/me/avatar/", response_model=StandardResponse)
 async def upload_avatar(
     file: UploadFile = File(...),
     current_user: User = Depends(get_current_user),

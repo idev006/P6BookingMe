@@ -36,7 +36,7 @@ const selectedBookingForDetail = ref<any | null>(null);
 
 const handleExport = async () => {
   try {
-    const response = await api.get('/admin/reporting/export/bookings', { responseType: 'blob' });
+    const response = await api.get('/admin/reporting/export/bookings/', { responseType: 'blob' });
     const url = window.URL.createObjectURL(new Blob([response.data]));
     const link = document.createElement('a');
     link.href = url;
@@ -66,7 +66,7 @@ const fetchAllBookings = async () => {
       search: searchQuery.value || undefined,
       status: statusFilter.value !== 'all' ? statusFilter.value : undefined
     };
-    const response = await api.get('/admin/bookings', { params });
+    const response = await api.get('/admin/bookings/', { params });
     bookings.value = response.data.data.data;
     totalBookings.value = response.data.data.total;
   } catch (err) {
@@ -111,7 +111,7 @@ const handleAdminCancel = async () => {
   }
   
   try {
-    await api.post(`/admin/bookings/${selectedBookingId.value}/cancel`, { reason: cancelReason.value });
+    await api.post(`/admin/bookings/${selectedBookingId.value}/cancel/`, { reason: cancelReason.value });
     ui.showAlert({ title: 'สำเร็จ', message: 'ยกเลิกการจองเรียบร้อยแล้ว', type: 'success' });
     isCancelModalOpen.value = false;
     fetchAllBookings();

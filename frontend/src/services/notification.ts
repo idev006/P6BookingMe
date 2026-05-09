@@ -11,7 +11,7 @@ export interface Notification {
 
 const notificationService = {
   getNotifications: (limit: number = 10) => 
-    api.get(`/notifications?limit=${limit}`),
+    api.get(`/notifications/?limit=${limit}`),
     
   markAllRead: () => 
     api.post('/notifications/read-all'),

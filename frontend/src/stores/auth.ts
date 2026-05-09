@@ -31,7 +31,7 @@ export const useAuthStore = defineStore('auth', () => {
     loading.value = true;
     error.value = null;
     try {
-      const response = await api.post('/auth/login', credentials);
+      const response = await api.post('/auth/login/', credentials);
       const { access_token, user: userData } = response.data.data;
       
       token.value = access_token;
@@ -51,7 +51,7 @@ export const useAuthStore = defineStore('auth', () => {
     loading.value = true;
     error.value = null;
     try {
-      await api.post('/auth/register', userData);
+      await api.post('/auth/register/', userData);
     } catch (err: any) {
       error.value = err.response?.data?.detail || 'สมัครสมาชิกไม่สำเร็จ';
       throw err;

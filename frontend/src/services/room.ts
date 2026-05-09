@@ -38,7 +38,7 @@ export interface RoomCreateData {
 
 export default {
   async getRooms(params: any = {}) {
-    const response = await api.get('/rooms', { params });
+    const response = await api.get('/rooms/', { params });
     return response.data;
   },
 
@@ -48,7 +48,7 @@ export default {
   },
 
   async createRoom(data: RoomCreateData) {
-    const response = await api.post('/rooms', data);
+    const response = await api.post('/rooms/', data);
     return response.data;
   },
 
@@ -58,12 +58,12 @@ export default {
   },
 
   async deactivateRoom(id: number) {
-    const response = await api.post(`/rooms/${id}/deactivate`);
+    const response = await api.post(`/rooms/${id}/deactivate/`);
     return response.data;
   },
 
   async activateRoom(id: number) {
-    const response = await api.post(`/rooms/${id}/activate`);
+    const response = await api.post(`/rooms/${id}/activate/`);
     return response.data;
   },
 
@@ -71,7 +71,7 @@ export default {
   async uploadImage(roomId: number, file: File) {
     const formData = new FormData();
     formData.append('file', file);
-    const response = await api.post(`/rooms/${roomId}/images`, formData, {
+    const response = await api.post(`/rooms/${roomId}/images/`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
@@ -80,11 +80,11 @@ export default {
   },
 
   async deleteImage(roomId: number, imageId: number) {
-    await api.delete(`/rooms/${roomId}/images/${imageId}`);
+    await api.delete(`/rooms/${roomId}/images/${imageId}/`);
   },
 
   async setPrimaryImage(roomId: number, imageId: number) {
-    const response = await api.post(`/rooms/${roomId}/images/${imageId}/set-primary`);
+    const response = await api.post(`/rooms/${roomId}/images/${imageId}/set-primary/`);
     return response.data;
   },
 };

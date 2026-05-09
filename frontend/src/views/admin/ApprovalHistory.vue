@@ -24,7 +24,7 @@ const fetchHistory = async () => {
   loading.value = true;
   try {
     const skip = (currentPage.value - 1) * pageSize.value;
-    const response = await api.get(`/approvals/history?limit=${pageSize.value}&skip=${skip}`);
+    const response = await api.get(`/approvals/history/?limit=${pageSize.value}&skip=${skip}`);
     history.value = response.data.data.data;
     total.value = response.data.data.total;
   } catch (err) {

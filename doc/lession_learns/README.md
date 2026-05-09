@@ -43,3 +43,4 @@
 ## 🚀 4. Sprint-Specific Insights
 
 - [Sprint 6.4: Approver Experience Optimization](./sprint_6.4_approver_experience.md)
+- [Remote Access: Cloudflare Tunnel, CORS & Trailing Slashes](./cloudflare_tunnel_cors_and_redirects.md)

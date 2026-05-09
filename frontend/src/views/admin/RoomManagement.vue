@@ -6,7 +6,7 @@ import { useRoomStore } from '../../stores/room';
 import roomAdminService from '../../services/roomAdmin';
 import { useUIStore } from '../../stores/ui';
 import { Plus, Edit2, Trash2, MapPin, Users, Check, X, Camera, Eye, Calendar, Clock, Info, History, Search, Filter } from 'lucide-vue-next';
-import { formatDate, formatTime } from '../../utils/format';
+import { formatDate, formatTime, getImageUrl } from '../../utils/format';
 
 const roomStore = useRoomStore();
 const ui = useUIStore();
@@ -136,7 +136,7 @@ const openRoomDetail = async (room: any) => {
   
   try {
     const [futureRes, pastRes] = await Promise.all([
-      api.get('/bookings', { params: { 
+      api.get('/bookings/', { params: { 
         room_id: room.id, 
         status: 'confirmed', 
         start_time_after: now,
@@ -144,7 +144,7 @@ const openRoomDetail = async (room: any) => {
         sort: 'start_time',
         order: 'asc'
       }}),
-      api.get('/bookings', { params: { 
+      api.get('/bookings/', { params: { 
         room_id: room.id, 
         status: 'confirmed', 
         end_time_before: now,
@@ -160,7 +160,7 @@ const openRoomDetail = async (room: any) => {
     console.error('Failed to fetch room bookings', err);
     // Fallback if specific filters not supported, fetch all and filter client side
     try {
-      const allRes = await api.get('/bookings', { params: { room_id: room.id, status: 'confirmed', limit: 50 } });
+      const allRes = await api.get('/bookings/', { params: { room_id: room.id, status: 'confirmed', limit: 50 } });
       const all = allRes.data.data.data;
       futureBookings.value = all.filter((b: any) => new Date(b.start_time) >= new Date()).slice(0, 10);
       pastBookings.value = all.filter((b: any) => new Date(b.start_time) < new Date()).sort((a:any, b:any) => new Date(b.start_time).getTime() - new Date(a.start_time).getTime()).slice(0, 10);
@@ -319,7 +319,7 @@ const handleDelete = (id: number) => {
                   <div class="flex items-center gap-4">
                     <div class="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center text-primary font-black overflow-hidden border border-base-content/5 group-hover:bg-primary group-hover:text-white transition-all shadow-sm">
                       <img v-if="room.images && room.images.find((i: any) => i.is_primary)" 
-                        :src="`http://localhost:8000/${room.images.find((i: any) => i.is_primary).image_path}`" 
+                        :src="getImageUrl(room.images.find((i: any) => i.is_primary).image_path)" 
                         class="w-full h-full object-cover group-hover:scale-110 transition-transform" />
                       <span v-else class="text-xl">{{ room.name.charAt(0) }}</span>
                     </div>
@@ -405,7 +405,7 @@ const handleDelete = (id: number) => {
         <!-- Hero Header -->
         <div class="relative h-64 overflow-hidden">
           <img v-if="currentRoom.images && currentRoom.images.find((i: any) => i.is_primary)" 
-            :src="`http://localhost:8000/${currentRoom.images.find((i: any) => i.is_primary).image_path}`" 
+            :src="getImageUrl(currentRoom.images.find((i: any) => i.is_primary).image_path)" 
             class="w-full h-full object-cover" />
           <div v-else class="w-full h-full bg-gradient-to-br from-primary/20 via-base-100 to-secondary/10 flex items-center justify-center text-primary text-6xl font-black">
             {{ currentRoom.name.charAt(0) }}
@@ -619,7 +619,7 @@ const handleDelete = (id: number) => {
           <!-- Existing Images -->
           <div v-for="img in currentRoom?.images" :key="img.id" 
             class="aspect-video rounded-3xl overflow-hidden relative border border-base-content/5 group shadow-lg">
-            <img :src="`http://localhost:8000/${img.image_path}`" class="w-full h-full object-cover" />
+            <img :src="getImageUrl(img.image_path)" class="w-full h-full object-cover" />
             
             <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
               <button @click="handleSetPrimary(img.id)" 
