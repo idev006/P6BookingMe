@@ -3,7 +3,7 @@ __pycache__/
 *.py[cod]
 *.pyo
 #.env
-*.env.*
+#*.env.*
 #!*.env.example
 
 # Virtual env (outside workspace — never commit)
