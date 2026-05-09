@@ -6,23 +6,29 @@ echo  P6BookingMe: Environment Setup Script
 echo ==========================================
 echo.
 
-:: 1. Check for Python
-python --version >nul 2>&1
+:: 1. Check for Python 3.12
+echo [INFO] Checking Python version...
+for /f "tokens=2" %%v in ('python --version 2^>^&1') do set py_ver=%%v
+echo %py_ver% | findstr /r "^3.12" >nul
 if %errorlevel% neq 0 (
-    echo [ERROR] Python is not installed or not in PATH.
+    echo [ERROR] Required Python 3.12.x, but found %py_ver%.
+    echo Please install Python 3.12 and try again.
     pause
     exit /b 1
 )
-echo [OK] Python found.
+echo [OK] Python %py_ver% found.
 
-:: 2. Check for Node.js
-node -v >nul 2>&1
+:: 2. Check for Node.js v24
+echo [INFO] Checking Node.js version...
+for /f "tokens=1" %%v in ('node -v 2^>^&1') do set node_ver=%%v
+echo %node_ver% | findstr /r "^v24" >nul
 if %errorlevel% neq 0 (
-    echo [ERROR] Node.js is not installed or not in PATH.
+    echo [ERROR] Required Node.js v24.x, but found %node_ver%.
+    echo Please install Node.js v24 and try again.
     pause
     exit /b 1
 )
-echo [OK] Node.js found.
+echo [OK] Node.js %node_ver% found.
 
 :: 3. Create Python Virtual Environment in the PARENT folder
 if not exist "..\my_env" (
